@@ -16,9 +16,9 @@ namespace Project.Scripts.Player
         [SerializeField] private CameraShakeEffectConfig _defaultJumpCameraShakeEffectConfig;
         [SerializeField] private CameraShakeEffectConfig _forcedJumpCameraShakeEffectConfig;
         
-        private bool _forcedFall = false;
-        private bool _forcedFallSpaceComboOpen = false;
-        private bool _forcedFallShiftComboOpen = false;
+        private bool _forcedFall;
+        private bool _forcedFallSpaceComboOpen;
+        private bool _forcedFallShiftComboOpen;
 
         private bool _doubleJump;
         
@@ -30,28 +30,22 @@ namespace Project.Scripts.Player
             
             if (Input.GetKeyDown(KeyCode.Space) && _groundChecker.IsGrounded)
             {
-                if (_groundChecker.IsGrounded)
-                {
-                    Jump();
-                    return;
-                }
+                Jump();
+                return;
             }
 
-            if (!_groundChecker.IsGrounded)
+            if (_groundChecker.IsGrounded) return;
+            switch (_forcedFall)
             {
-                if (!_forcedFall && !_doubleJump && Input.GetKeyDown(KeyCode.Space) && !_forcedFallShiftComboOpen)
-                {
+                case false when !_doubleJump && Input.GetKeyDown(KeyCode.Space) && !_forcedFallShiftComboOpen:
                     Jump();
                     
                     _doubleJump = true;
 
                     return;
-                }
-                
-                if (!_forcedFall && IsForcedFallCombo()) 
-                { 
+                case false when IsForcedFallCombo():
                     ForceFall();
-                }
+                    break;
             }
         }
 
@@ -112,14 +106,9 @@ namespace Project.Scripts.Player
 
         private void OnGrounded()
         {
-            if (_forcedFall)
-            {
-                CameraShake.Instance?.ShakeCamera(_forcedJumpCameraShakeEffectConfig);
-            }
-            else
-            {
-                CameraShake.Instance?.ShakeCamera(_defaultJumpCameraShakeEffectConfig);
-            }
+            CameraShake.Instance?.ShakeCamera(_forcedFall
+                ? _forcedJumpCameraShakeEffectConfig
+                : _defaultJumpCameraShakeEffectConfig);
             _forcedFall = false;
             _doubleJump = false;
             ResetForcedFallCombo();

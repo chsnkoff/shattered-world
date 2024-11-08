@@ -14,12 +14,10 @@ namespace Project.Scripts.Player
         
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.GetComponent<Ground>())
-            {
-                IsGrounded = true;
+            if (!other.gameObject.GetComponent<Ground>()) return;
+            IsGrounded = true;
                 
-                OnGrounded?.Invoke();
-            }
+            OnGrounded?.Invoke();
         }
 
         private void OnTriggerExit(Collider other)

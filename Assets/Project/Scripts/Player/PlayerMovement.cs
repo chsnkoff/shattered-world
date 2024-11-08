@@ -36,24 +36,19 @@ namespace Project.Scripts.Player
                 var cameraForward = new Vector3(0, 0, 0);
                 var cameraRight = new Vector3(0, 0, 0);
 
-                if (_mainCamera)
-                {
-                    cameraForward = _mainCamera.transform.forward;
-                    cameraRight = _mainCamera.transform.right;
+                if (!_mainCamera) return cameraForward * vertical + cameraRight * horizontal;
+                cameraForward = _mainCamera.transform.forward;
+                cameraRight = _mainCamera.transform.right;
                 
-                    cameraForward.y = 0;
-                    cameraRight.y = 0;
+                cameraForward.y = 0;
+                cameraRight.y = 0;
                     
-                    cameraForward.Normalize();
-                    cameraRight.Normalize();
-                }
-                
+                cameraForward.Normalize();
+                cameraRight.Normalize();
+
                 return cameraForward * vertical + cameraRight * horizontal;
             }
-            else
-            {
-                return new Vector3(horizontal, 0, vertical);
-            }
+            return new Vector3(horizontal, 0, vertical);
         }
 
         private void Rotate(Quaternion targetRotation)
@@ -66,15 +61,11 @@ namespace Project.Scripts.Player
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
 
-            if (horizontal != 0 || vertical != 0)
-            {
-                var direction = new Vector3(horizontal, 0, vertical).normalized;
-                var addictionCamera = Quaternion.Euler(0,_mainCamera ? _mainCamera.transform.rotation.eulerAngles.y + 180 : 0,0);
+            if (horizontal == 0 && vertical == 0) return transform.rotation;
+            var direction = new Vector3(horizontal, 0, vertical).normalized;
+            var addictionCamera = Quaternion.Euler(0,_mainCamera ? _mainCamera.transform.rotation.eulerAngles.y + 180 : 0,0);
                 
-                return Quaternion.LookRotation(direction) * addictionCamera;
-            }
-
-            return transform.rotation;
+            return Quaternion.LookRotation(direction) * addictionCamera;
         }
     }
 }

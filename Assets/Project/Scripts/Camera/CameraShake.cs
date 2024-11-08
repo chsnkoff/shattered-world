@@ -21,6 +21,7 @@ namespace Project.Scripts.Camera
             _shakeTimer = config.Duration;
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         private void SetShakeValues(float amplitude, float friquency)
         {
             for (var i = 0; i < 3; i++)
@@ -35,14 +36,12 @@ namespace Project.Scripts.Camera
 
         public void Update()
         {
-            if (_shakeTimer > 0)
-            {
-                _shakeTimer -= Time.deltaTime;
+            if (!(_shakeTimer > 0)) return;
+            _shakeTimer -= Time.deltaTime;
 
-                if (_shakeTimer <= 0)
-                {
-                    SetShakeValues(0, 0);
-                }
+            if (_shakeTimer <= 0)
+            {
+                SetShakeValues(0, 0);
             }
         }
     }
