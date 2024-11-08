@@ -31,24 +31,21 @@ namespace Project.Scripts.Player
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
 
-            if (horizontal != 0 || vertical != 0)
-            {
-                var cameraForward = new Vector3(0, 0, 0);
-                var cameraRight = new Vector3(0, 0, 0);
+            if (horizontal == 0 && vertical == 0) return new Vector3(horizontal, 0, vertical);
+            var cameraForward = new Vector3(0, 0, 0);
+            var cameraRight = new Vector3(0, 0, 0);
 
-                if (!_mainCamera) return cameraForward * vertical + cameraRight * horizontal;
-                cameraForward = _mainCamera.transform.forward;
-                cameraRight = _mainCamera.transform.right;
-                
-                cameraForward.y = 0;
-                cameraRight.y = 0;
+            if (!_mainCamera) return cameraForward * vertical + cameraRight * horizontal;
+            cameraForward = _mainCamera.transform.forward;
+            cameraRight = _mainCamera.transform.right;
+            
+            cameraForward.y = 0;
+            cameraRight.y = 0;
                     
-                cameraForward.Normalize();
-                cameraRight.Normalize();
+            cameraForward.Normalize();
+            cameraRight.Normalize();
 
-                return cameraForward * vertical + cameraRight * horizontal;
-            }
-            return new Vector3(horizontal, 0, vertical);
+            return cameraForward * vertical + cameraRight * horizontal;
         }
 
         private void Rotate(Quaternion targetRotation)
