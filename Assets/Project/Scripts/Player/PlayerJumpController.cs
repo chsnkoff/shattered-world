@@ -23,6 +23,7 @@ namespace Project.Scripts.Player
 
         private bool _doubleJump;
         
+        public bool IsGrounded => _groundChecker.IsGrounded;
         public UnityAction OnJump;
 
         private void Update()

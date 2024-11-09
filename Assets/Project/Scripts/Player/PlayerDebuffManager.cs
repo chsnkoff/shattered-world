@@ -8,7 +8,7 @@ namespace Project.Scripts.Player
     {
         [SerializeField] private Rigidbody _rb;
         
-        private List<Debuff> _debuffs = new();
+        private readonly List<Debuff> _debuffs = new();
 
         public void AddDebuff(Debuff debuff)
         {
