@@ -1,31 +1,23 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider))]
 public class ObjectInteraction : MonoBehaviour
 {
-    private static GameObject _targetUIElement;
+    public static UnityEvent OnEnter = new();
+    public static UnityEvent OnExit = new();
     
     [SerializeField] private UnityEvent _onInteract;
-    [SerializeField] private GameObject _initialUIElement;
-    
-    private bool _isUIActivated;
     
     private void Awake()
     {
         InitTrigger();
-        InitUIElement();
-        DeactivateUIElement();
     }
 
     private void Update()
     {
-        if (_isUIActivated && Input.GetKeyDown(KeyCode.E)) Interact();
-    }
-
-    private void InitUIElement()
-    {
-        if (!_targetUIElement && _initialUIElement) _targetUIElement = _initialUIElement;
+        if (UITriggerSubscriber.IsUIActivated && Input.GetKeyDown(KeyCode.E)) Interact();
     }
 
     private void InitTrigger()
@@ -35,44 +27,18 @@ public class ObjectInteraction : MonoBehaviour
         triggerCollider.isTrigger = true;
     }
     
-    private void ActivateUIElement()
-    {
-        if (_targetUIElement)
-        {
-            _targetUIElement.SetActive(true);
-            _isUIActivated = true;
-        }
-        else
-        {
-            Debug.LogWarning("UI-элемент не назначен!");
-        }
-    }
-
-    private void DeactivateUIElement()
-    {
-        if (_targetUIElement)
-        {
-            _targetUIElement.SetActive(false);
-            _isUIActivated = false;
-        }
-        else
-        {
-            Debug.LogWarning("UI-элемент не назначен!");
-        }
-    }
-    
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
         Debug.Log("Player entered trigger");
-        ActivateUIElement();
+        OnEnter?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
         Debug.Log("Player exited trigger");
-        DeactivateUIElement();
+        OnExit?.Invoke();
     }
 
     private void Interact()
