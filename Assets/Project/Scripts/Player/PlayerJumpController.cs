@@ -9,6 +9,7 @@ namespace Project.Scripts.Player
     {
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private PlayerGroundChecker _groundChecker;
+        [SerializeField] private PlayerDebuffManager _debuffManager;
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _gravityScale;
         [SerializeField] private float _forcedFallForce;
@@ -52,7 +53,7 @@ namespace Project.Scripts.Player
         private void Jump()
         {
             _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
-            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * (_jumpForce * _debuffManager.GetDebuffsValueByType(Debuff.DebuffType.JumpForce)), ForceMode.Impulse);
                 
             OnJump?.Invoke();
         }
@@ -60,16 +61,15 @@ namespace Project.Scripts.Player
         private void ForceFall()
         {
             _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
-            _rb.AddForce(Vector3.down * _forcedFallForce, ForceMode.Impulse);
+            _rb.AddForce(Vector3.down * (_forcedFallForce * _debuffManager.GetDebuffsValueByType(Debuff.DebuffType.JumpForce)), ForceMode.Impulse);
             
             _forcedFall = true;
         }
 
         private void ApplyAcceleration()
         {
-            _rb.AddForce(Vector3.up * (Physics.gravity.y * (_gravityScale - 1) * Time.deltaTime), ForceMode.Acceleration);
+            _rb.AddForce(Vector3.up * (Physics.gravity.y * (_gravityScale - 1) * Time.deltaTime * _debuffManager.GetDebuffsValueByType(Debuff.DebuffType.Gravity)), ForceMode.Acceleration);
         }
-        
         
         private bool IsForcedFallCombo()
         {
