@@ -5,6 +5,7 @@ namespace Project.Scripts.Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private Rigidbody _rb;
+        [SerializeField] private PlayerDebuffManager _debuffManager;
         [SerializeField] private float _speed;
         [SerializeField] private float _rotationSpeed;
 
@@ -23,7 +24,7 @@ namespace Project.Scripts.Player
 
         private void Move(Vector3 direction)
         {
-            _rb.velocity = direction * _speed + new Vector3(0, _rb.velocity.y, 0);
+            _rb.velocity = direction * (_speed * _debuffManager.GetDebuffsValueByType(Debuff.DebuffType.Movement)) + new Vector3(0, _rb.velocity.y, 0);
         }
 
         private Vector3 InputMoveDirection()
