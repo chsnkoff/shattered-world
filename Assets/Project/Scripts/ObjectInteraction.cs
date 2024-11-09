@@ -1,12 +1,13 @@
 using JetBrains.Annotations;
+using Project.Scripts.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider))]
 public class ObjectInteraction : MonoBehaviour
 {
-    public static UnityEvent OnEnter = new();
-    public static UnityEvent OnExit = new();
+    public static readonly UnityEvent OnEnter = new();
+    public static readonly UnityEvent OnExit = new();
     
     [SerializeField] private UnityEvent _onInteract;
     
@@ -29,21 +30,18 @@ public class ObjectInteraction : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
-        Debug.Log("Player entered trigger");
+        if (!other.GetComponent<Player>()) return;
         OnEnter?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
-        Debug.Log("Player exited trigger");
+        if (!other.GetComponent<Player>()) return;
         OnExit?.Invoke();
     }
 
     private void Interact()
     {
         _onInteract?.Invoke();
-        Debug.Log("Player interacted");
     }
 }
