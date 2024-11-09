@@ -11,18 +11,27 @@ namespace Project.Scripts.Player
         public bool IsGrounded { get; private set; } = false;
 
         public UnityAction OnGrounded;
+
+        private int _currentCountOfTriggers;
         
         private void OnTriggerEnter(Collider other)
         {
             if (!other.gameObject.GetComponent<Ground>()) return;
-            IsGrounded = true;
-                
-            OnGrounded?.Invoke();
+            _currentCountOfTriggers++;
+
+            if (_currentCountOfTriggers == 1)
+            {
+                OnGrounded?.Invoke();
+                IsGrounded = true;
+            }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.GetComponent<Ground>())
+            if (!other.gameObject.GetComponent<Ground>()) return;
+            _currentCountOfTriggers--;
+
+            if (_currentCountOfTriggers == 0)
             {
                 IsGrounded = false;
             }

@@ -123,12 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!54 &44429799 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 7266449033061094984, guid: aa768a5d520c9f644abbb8edff63fc20,
-    type: 3}
-  m_PrefabInstance: {fileID: 6240115824824946565}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &44429803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4497548371342204933, guid: aa768a5d520c9f644abbb8edff63fc20,
@@ -3827,17 +3821,17 @@ PrefabInstance:
     - target: {fileID: 7095392567770427726, guid: 9031bd71fd6c78545b0f44cff3dc5e09,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.38984558
+      value: 0.38984564
       objectReference: {fileID: 0}
     - target: {fileID: 7095392567770427726, guid: 9031bd71fd6c78545b0f44cff3dc5e09,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.58393
+      value: 0.5839299
       objectReference: {fileID: 0}
     - target: {fileID: 7095392567770427726, guid: 9031bd71fd6c78545b0f44cff3dc5e09,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.376737
+      value: -0.37673694
       objectReference: {fileID: 0}
     - target: {fileID: 8006830410372048630, guid: 9031bd71fd6c78545b0f44cff3dc5e09,
         type: 3}
@@ -3970,25 +3964,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1475371058820865314, guid: aa768a5d520c9f644abbb8edff63fc20,
-        type: 3}
-      propertyPath: _rb
-      value: 
-      objectReference: {fileID: 44429799}
     - target: {fileID: 2311863594019303192, guid: aa768a5d520c9f644abbb8edff63fc20,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2311863594019303192, guid: aa768a5d520c9f644abbb8edff63fc20,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2610489976120341524, guid: aa768a5d520c9f644abbb8edff63fc20,
-        type: 3}
-      propertyPath: _jumpForce
-      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4497548371342204933, guid: aa768a5d520c9f644abbb8edff63fc20,
         type: 3}

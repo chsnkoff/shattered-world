@@ -6,8 +6,12 @@ namespace Project.Scripts.Player
     {
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private PlayerDebuffManager _debuffManager;
+        [SerializeField] private PlayerGroundChecker _groundChecker;
         [SerializeField] private float _speed;
         [SerializeField] private float _rotationSpeed;
+        [SerializeField] private float _maxSlopeAngle;
+        [SerializeField] private LayerMask _groundLayerMask;
+        [SerializeField] private Transform _slopeRaycastOrigin;
 
         private UnityEngine.Camera _mainCamera;
 
@@ -18,7 +22,10 @@ namespace Project.Scripts.Player
         
         private void Update()
         {
-            Move(InputMoveDirection());
+            if (CanMove())
+            {
+                Move(InputMoveDirection());
+            }
             Rotate(InputRotation());
         }
 
@@ -65,5 +72,18 @@ namespace Project.Scripts.Player
                 
             return Quaternion.LookRotation(direction) * addictionCamera;
         }
+
+        private bool CanMove()
+        {
+            if (!_groundChecker.IsGrounded) return true;
+
+            if (!Physics.Raycast(_slopeRaycastOrigin.position, Vector3.down, out var hit, 0.3f, _groundLayerMask))
+                return false;
+            
+            var angle = Vector3.Angle(hit.normal, Vector3.up);
+            return angle <= _maxSlopeAngle;
+
+        }
+
     }
 }
