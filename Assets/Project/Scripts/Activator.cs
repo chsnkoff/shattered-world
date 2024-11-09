@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Project.Scripts.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,7 +13,6 @@ public class Activator : MonoBehaviour
         StateOFF();
     }
     
-    
     public void ToggleStation()
     {
         if (!IsActive)
@@ -30,14 +25,14 @@ public class Activator : MonoBehaviour
         }
     }
 
-    public void StateON()
+    private void StateON()
     {
         gameObject.SetActive(false);
         IsActive = true;
         OnEnable.Invoke();
     }
 
-    public void StateOFF()
+    private void StateOFF()
     {
         gameObject.SetActive(true);
         IsActive = false;
