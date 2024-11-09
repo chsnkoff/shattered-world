@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,37 +7,39 @@ public class Activator : MonoBehaviour
     public UnityEvent OnEnable;
     public UnityEvent OnDisable;
 
+    [UsedImplicitly] 
     public static bool IsActive;
 
     private void Awake()
     {
-        StateOFF();
+        StateOff();
     }
     
+    [UsedImplicitly]
     public void ToggleStation()
     {
-        if (!IsActive)
+        switch (IsActive)
         {
-            StateON();
-        }
-        else if(IsActive)
-        {
-            StateOFF();
+            case false:
+                StateOn();
+                break;
+            case true:
+                StateOff();
+                break;
         }
     }
 
-    private void StateON()
+    private void StateOn()
     {
         gameObject.SetActive(false);
         IsActive = true;
-        OnEnable.Invoke();
+        OnEnable?.Invoke();
     }
 
-    private void StateOFF()
+    private void StateOff()
     {
         gameObject.SetActive(true);
         IsActive = false;
-        OnDisable.Invoke();
+        OnDisable?.Invoke();
     }
-
 }
