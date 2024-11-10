@@ -22,7 +22,7 @@ public class UITriggerSubscriber : MonoBehaviour
 
     private void OnExit()
     {
-        _triggersCounter--;
+        if (_triggersCounter != 0) _triggersCounter--;
         if (_triggersCounter != 0) return;
         _textMesh.enabled = false;
         IsUIActivated = false;

@@ -9,9 +9,10 @@ public class ObjectInteraction : MonoBehaviour
     public static readonly UnityEvent OnExit = new();
     
     [SerializeField] private UnityEvent _onInteract;
-    [SerializeField] private bool _disableAfterInteracting;
-
-    private bool _interactedOnce;
+    [SerializeField] private uint _usingsAmount = 1;
+    
+    private uint _interactionsCounter;
+    private bool _isTriggered;
     
     private void Awake()
     {
@@ -20,7 +21,7 @@ public class ObjectInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (UITriggerSubscriber.IsUIActivated && Input.GetKeyDown(KeyCode.E)) Interact();
+        if (UITriggerSubscriber.IsUIActivated && _isTriggered && Input.GetKeyDown(KeyCode.E)) Interact();
     }
 
     private void InitTrigger()
@@ -32,22 +33,24 @@ public class ObjectInteraction : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (_disableAfterInteracting && _interactedOnce) return;
+        _isTriggered = true;
+        if (_interactionsCounter >= _usingsAmount) return;
         if (!other.GetComponent<Player>()) return;
         OnEnter?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
+        _isTriggered = false;
         if (!other.GetComponent<Player>()) return;
         OnExit?.Invoke();
     }
 
     private void Interact()
     {
-        if (_disableAfterInteracting && _interactedOnce) return;
+        if (_interactionsCounter >= _usingsAmount) return;
         _onInteract?.Invoke();
-        _interactedOnce = true;
-        if (_disableAfterInteracting) OnExit?.Invoke();
+        _interactionsCounter++;
+        if (_interactionsCounter >= _usingsAmount) OnExit?.Invoke();
     }
 }
