@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,41 +7,43 @@ namespace Project.Scripts.Player
 {
     public class PlayerGroundChecker : MonoBehaviour
     {
-        [SerializeField] private PlayerJumpController _jumpController;
+        [SerializeField] private List<GameObject> _raycastOrigins;
+        [SerializeField] private LayerMask _groundLayerMask;
+        [SerializeField] private float _maxSlopeAngle;
 
         public bool IsGrounded { get; private set; } = false;
+        private float? _minSlopeAngle = null;
 
         public UnityAction OnGrounded;
-        
-        private void OnTriggerEnter(Collider other)
-        {
-            if (!other.gameObject.GetComponent<Ground>()) return;
-            IsGrounded = true;
-                
-            OnGrounded?.Invoke();
-        }
 
-        private void OnTriggerExit(Collider other)
+        private void Update()
         {
-            if (other.gameObject.GetComponent<Ground>())
+            _minSlopeAngle = null;
+            
+            foreach (var rayOrigin in _raycastOrigins)
             {
-                IsGrounded = false;
+                if (!Physics.Raycast(rayOrigin.transform.position, Vector3.down, out var hit, 0.3f, _groundLayerMask)) continue;
+                
+                
+                var slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+                _minSlopeAngle = _minSlopeAngle == null || slopeAngle < _minSlopeAngle ? slopeAngle : _minSlopeAngle;
+                
+                if (IsGrounded) return;
+                //if (!IsSlopeAngleAllowed()) return;
+                
+                IsGrounded = true;
+                OnGrounded?.Invoke();
+                
+                return;
             }
-        }
-
-        private void OnPlayerJump()
-        {
+            
             IsGrounded = false;
         }
 
-        private void OnEnable()
+        public bool IsSlopeAngleAllowed()
         {
-            _jumpController.OnJump += OnPlayerJump;
+            return _minSlopeAngle <= _maxSlopeAngle || _minSlopeAngle == null;
         }
         
-        private void OnDisable()
-        {
-            _jumpController.OnJump -= OnPlayerJump;
-        }
     }
 }
