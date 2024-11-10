@@ -24,7 +24,7 @@ namespace Project.Scripts.Player
             if (_groundChecker.IsSlopeAngleAllowed())
             {
                 var moveDirection = InputMoveDirection();
-                IsMoving = moveDirection.magnitude > 0.1f;
+                IsMoving = moveDirection.magnitude > 0.01f;
                 Move(moveDirection);
             }
             Rotate(InputRotation());
