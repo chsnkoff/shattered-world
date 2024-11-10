@@ -9,9 +9,6 @@ namespace Project.Scripts.Player
         [SerializeField] private PlayerGroundChecker _groundChecker;
         [SerializeField] private float _speed;
         [SerializeField] private float _rotationSpeed;
-        [SerializeField] private float _maxSlopeAngle;
-        [SerializeField] private LayerMask _groundLayerMask;
-        [SerializeField] private Transform _slopeRaycastOrigin;
 
         private UnityEngine.Camera _mainCamera;
 
@@ -22,7 +19,7 @@ namespace Project.Scripts.Player
         
         private void Update()
         {
-            if (CanMove())
+            if (_groundChecker.IsSlopeAngleAllowed())
             {
                 Move(InputMoveDirection());
             }
@@ -71,18 +68,6 @@ namespace Project.Scripts.Player
             var addictionCamera = Quaternion.Euler(0,_mainCamera ? _mainCamera.transform.rotation.eulerAngles.y + 180 : 0,0);
                 
             return Quaternion.LookRotation(direction) * addictionCamera;
-        }
-
-        private bool CanMove()
-        {
-            if (!_groundChecker.IsGrounded) return true;
-
-            if (!Physics.Raycast(_slopeRaycastOrigin.position, Vector3.down, out var hit, 0.3f, _groundLayerMask))
-                return false;
-            
-            var angle = Vector3.Angle(hit.normal, Vector3.up);
-            return angle <= _maxSlopeAngle;
-
         }
 
     }

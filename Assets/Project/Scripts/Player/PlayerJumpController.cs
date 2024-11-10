@@ -32,14 +32,19 @@ namespace Project.Scripts.Player
             
             if (Input.GetKeyDown(KeyCode.Space) && _groundChecker.IsGrounded)
             {
-                Jump();
-                return;
+                Debug.Log(_groundChecker.IsSlopeAngleAllowed());
+                if (_groundChecker.IsSlopeAngleAllowed())
+                {
+                    Jump();
+                    return;
+                }
+
             }
 
             if (_groundChecker.IsGrounded) return;
             switch (_forcedFall)
             {
-                case false when !_doubleJump && Input.GetKeyDown(KeyCode.Space) && !_forcedFallShiftComboOpen:
+                case false when !_doubleJump && Input.GetKeyDown(KeyCode.Space) && !_forcedFallShiftComboOpen && _groundChecker.IsSlopeAngleAllowed():
                     Jump();
                     
                     _doubleJump = true;
