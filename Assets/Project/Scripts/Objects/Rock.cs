@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using Project.Scripts.Player;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Project.Scripts.Objects
 {
     public class Rock : MonoBehaviour
     {
+        public static readonly UnityEvent OnPlayerEntersRock = new();
+        public static readonly UnityEvent OnPlayerExitsRock = new();
+        
         [SerializeField] private List<Debuff> _debuffs;
         [SerializeField] private Renderer _renderer;
         [SerializeField] private Color _defaultMaterialColor;
@@ -18,7 +22,7 @@ namespace Project.Scripts.Objects
         private bool _needChangeMaterialColor;
         private float _changeMaterialColorTimeElapsed;
         private Color _startChangeMaterialColor;
-        
+
         private void Update()
         {
             if (!_needChangeMaterialColor) return;
@@ -27,21 +31,20 @@ namespace Project.Scripts.Objects
             var targetColor = PlayerInTrigger ? _transparentMaterialColor : _defaultMaterialColor;
 
             _renderer.material.color = Color.Lerp(_startChangeMaterialColor, new Color(_startChangeMaterialColor.r, _startChangeMaterialColor.g, _startChangeMaterialColor.b , targetColor.a), _changeMaterialColorTimeElapsed / _changeColorDuration);
-                
-            if (_changeMaterialColorTimeElapsed >= _changeColorDuration)
-            {
-                _changeMaterialColorTimeElapsed = 0f;
-                _needChangeMaterialColor = false;
-            }
+
+            if (!(_changeMaterialColorTimeElapsed >= _changeColorDuration)) return;
+            
+            _changeMaterialColorTimeElapsed = 0f;
+            _needChangeMaterialColor = false;
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (!other.gameObject.GetComponent<Player.Player>()) return;
-
             PlayerInTrigger = true;
             Player = other.gameObject;
             ChangeColor();
+            OnPlayerEntersRock?.Invoke();
             foreach (var debuff in _debuffs)
             {
                 other.gameObject.GetComponent<PlayerDebuffManager>()?.AddDebuff(debuff);
@@ -51,10 +54,10 @@ namespace Project.Scripts.Objects
         private void OnTriggerExit(Collider other)
         {
             if (!other.gameObject.GetComponent<Player.Player>()) return;
-            
             PlayerInTrigger = false;
             Player = null;
             ChangeColor();
+            OnPlayerExitsRock?.Invoke();
             foreach (var debuff in _debuffs)
             {
                 other.gameObject.GetComponent<PlayerDebuffManager>()?.RemoveDebuff(debuff);
