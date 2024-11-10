@@ -6,6 +6,7 @@ namespace Project.Scripts.Player
     {
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private PlayerDebuffManager _debuffManager;
+        [SerializeField] private PlayerGroundChecker _groundChecker;
         [SerializeField] private float _speed;
         [SerializeField] private float _rotationSpeed;
 
@@ -18,7 +19,10 @@ namespace Project.Scripts.Player
         
         private void Update()
         {
-            Move(InputMoveDirection());
+            if (_groundChecker.IsSlopeAngleAllowed())
+            {
+                Move(InputMoveDirection());
+            }
             Rotate(InputRotation());
         }
 
@@ -65,5 +69,6 @@ namespace Project.Scripts.Player
                 
             return Quaternion.LookRotation(direction) * addictionCamera;
         }
+
     }
 }
