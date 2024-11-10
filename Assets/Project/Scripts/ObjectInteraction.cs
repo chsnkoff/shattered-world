@@ -10,6 +10,9 @@ public class ObjectInteraction : MonoBehaviour
     public static readonly UnityEvent OnExit = new();
     
     [SerializeField] private UnityEvent _onInteract;
+    [SerializeField] private bool _disableAfterInteracting;
+
+    private bool _interactedOnce;
     
     private void Awake()
     {
@@ -30,6 +33,7 @@ public class ObjectInteraction : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        if (_disableAfterInteracting && _interactedOnce) return;
         if (!other.GetComponent<Player>()) return;
         OnEnter?.Invoke();
     }
@@ -42,6 +46,9 @@ public class ObjectInteraction : MonoBehaviour
 
     private void Interact()
     {
+        if (_disableAfterInteracting && _interactedOnce) return;
         _onInteract?.Invoke();
+        _interactedOnce = true;
+        if (_disableAfterInteracting) OnExit?.Invoke();
     }
 }
