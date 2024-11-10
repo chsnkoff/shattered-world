@@ -418,6 +418,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 05fcd137d2b5ea746989ef3a7622dc6a, type: 3}
   - {fileID: 8300000, guid: faea39095a42f414ba813ef5b9c334ce, type: 3}
   - {fileID: 8300000, guid: c8fc2cf5e2d48bb4498103ce7690dcd9, type: 3}
+  _slurpSound: {fileID: 0}
   _jumpController: {fileID: 2610489976120341524}
   _rb: {fileID: 7266449033061094984}
   _stepInterval: 0.25
@@ -473,7 +474,7 @@ MonoBehaviour:
   - {fileID: 8660263350383982782}
   _groundLayerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 6199
   _maxSlopeAngle: 45
 --- !u!114 &1644517640527700672
 MonoBehaviour:

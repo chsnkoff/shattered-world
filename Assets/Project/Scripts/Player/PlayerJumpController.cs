@@ -32,13 +32,11 @@ namespace Project.Scripts.Player
             
             if (Input.GetKeyDown(KeyCode.Space) && _groundChecker.IsGrounded)
             {
-                Debug.Log(_groundChecker.IsSlopeAngleAllowed());
                 if (_groundChecker.IsSlopeAngleAllowed())
                 {
                     Jump();
                     return;
                 }
-
             }
 
             if (_groundChecker.IsGrounded) return;
@@ -56,7 +54,7 @@ namespace Project.Scripts.Player
             }
         }
 
-        private void Jump()
+        public void Jump()
         {
             _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
             _rb.AddForce(Vector3.up * (_jumpForce * _debuffManager.GetDebuffsValueByType(Debuff.DebuffType.JumpForce)), ForceMode.Impulse);
