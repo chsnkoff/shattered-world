@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using Project.Scripts.Player;
 using UnityEngine;
 using UnityEngine.Events;
