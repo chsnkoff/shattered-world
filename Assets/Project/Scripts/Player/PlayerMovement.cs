@@ -12,6 +12,8 @@ namespace Project.Scripts.Player
 
         private UnityEngine.Camera _mainCamera;
 
+        public bool IsMoving {get; private set;}
+        
         private void Awake()
         {
             _mainCamera = UnityEngine.Camera.main;
@@ -21,7 +23,9 @@ namespace Project.Scripts.Player
         {
             if (_groundChecker.IsSlopeAngleAllowed())
             {
-                Move(InputMoveDirection());
+                var moveDirection = InputMoveDirection();
+                IsMoving = moveDirection.magnitude > 0.01f;
+                Move(moveDirection);
             }
             Rotate(InputRotation());
         }
