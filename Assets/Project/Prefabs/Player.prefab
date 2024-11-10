@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 1617689599217090289}
   - component: {fileID: 6817554497264221405}
   - component: {fileID: 1644517640527700672}
+  - component: {fileID: 6694001018973313304}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -475,6 +476,21 @@ MonoBehaviour:
     m_Bits: 55
   _maxSlopeAngle: 45
 --- !u!114 &1644517640527700672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311863594019303192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48754c81dec2abe488d4403fa69913f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _jumpController: {fileID: 2610489976120341524}
+  _groundChecker: {fileID: 6817554497264221405}
+  _collider: {fileID: 1406023181598932715}
+--- !u!114 &6694001018973313304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
