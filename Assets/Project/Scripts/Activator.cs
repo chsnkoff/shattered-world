@@ -12,7 +12,8 @@ public class Activator : MonoBehaviour
 
     private void Awake()
     {
-        StateOff();
+        if (gameObject.activeInHierarchy) StateOn();
+        else StateOff();
     }
     
     [UsedImplicitly]
