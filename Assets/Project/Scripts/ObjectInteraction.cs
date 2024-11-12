@@ -33,16 +33,16 @@ public class ObjectInteraction : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        _isTriggered = true;
         if (_interactionsCounter >= _usingsAmount) return;
         if (!other.GetComponent<Player>()) return;
+        _isTriggered = true;
         OnEnter?.Invoke();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        _isTriggered = false;
         if (!other.GetComponent<Player>()) return;
+        _isTriggered = false;
         OnExit?.Invoke();
     }
 
