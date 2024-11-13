@@ -8,12 +8,11 @@ public class Activator : MonoBehaviour
     public UnityEvent OnDisable;
 
     [UsedImplicitly] 
-    public static bool IsActive;
+    public bool IsActive;
 
     private void Awake()
     {
-        if (gameObject.activeInHierarchy) StateOn();
-        else StateOff();
+        StateOff();
     }
     
     [UsedImplicitly]

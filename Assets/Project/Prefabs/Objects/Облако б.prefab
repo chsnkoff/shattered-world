@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 672528014134441099}
   - component: {fileID: 1508608517445707926}
   - component: {fileID: 65795116115862517}
-  - component: {fileID: 6140507489461668719}
+  - component: {fileID: 8391668893561669355}
   m_Layer: 0
   m_Name: "\u041E\u0431\u043B\u0430\u043A\u043E \u0431"
   m_TagString: Untagged
@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4910885364788002560}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6221196, y: -0.53715336, z: -0.2953958, w: -0.4870059}
+  m_LocalRotation: {x: -0.6221211, y: 0.53715163, z: 0.29539382, w: 0.4870071}
   m_LocalPosition: {x: 7.4968553, y: 18.014366, z: 7.6553125}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -112.587, y: -23.906982, z: 97.693}
 --- !u!33 &1508608517445707926
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3eaa1e81cb03c4f4fa0d2f6a6f822da2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6140507489461668719
-MeshCollider:
+--- !u!65 &8391668893561669355
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,7 +102,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5724234320636869238, guid: f0caf9405d87db74b970ca58577228ec, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 6.9873614, y: 7.423835, z: 1.9434745}
+  m_Center: {x: -0.2671705, y: 2.0086057, z: -1.0909128}

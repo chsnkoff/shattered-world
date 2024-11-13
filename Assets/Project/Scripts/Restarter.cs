@@ -7,6 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class Restarter : MonoBehaviour
 {
+    private void Awake()
+    {
+        Cursor.visible = false;
+    }
+    
+    
     private void Restart()
     {
         int currentSceneID = SceneManager.GetActiveScene().buildIndex;

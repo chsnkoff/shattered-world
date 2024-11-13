@@ -44,6 +44,7 @@ public class PlayerSwapperInteraction : MonoBehaviour
         _player.GetComponent<PlayerJumpController>().enabled = false;
         _alternateObject.GetComponent<PlayerMovement>().enabled = true;
         _alternateObject.GetComponent<PlayerJumpController>().enabled = true;
+        _alternateObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         _cfl.Follow = _alternateObject.transform;
         _cfl.LookAt = _alternateObject.transform;}
 }

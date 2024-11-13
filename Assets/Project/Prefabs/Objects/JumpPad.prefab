@@ -71,6 +71,8 @@ MonoBehaviour:
     Multiplier: 1
   - Type: 2
     Multiplier: 0.3
+  - Type: 0
+    Multiplier: 0.7
 --- !u!1 &4844719351198156429
 GameObject:
   m_ObjectHideFlags: 0
